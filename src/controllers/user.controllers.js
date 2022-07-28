@@ -2,14 +2,16 @@ import createUserService from "../services/users/createUser.service"
 import listUserService from "../services/users/listUser.service"
 import retrieveUserService from "../services/users/retrieveUser.service"
 
-const createUserController = (request, response) => {
+const createUserController = async (request, response) => {
     const user = request.body
-    const newUser = createUserService(user)
+    const newUser = await createUserService(user)
     return response.status(201).json(newUser)
 }
 
 const listUserController = (request, response) => {
     const users = listUserService()
+    console.log(request.userId)
+    console.log(request.userEmail)
     return response.json(users)
 }
 
