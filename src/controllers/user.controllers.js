@@ -3,16 +3,28 @@ import listUserService from "../services/users/listUser.service"
 import retrieveUserService from "../services/users/retrieveUser.service"
 
 const createUserController = async (request, response) => {
-    const user = request.body
-    const newUser = await createUserService(user)
-    return response.status(201).json(newUser)
+    try {
+        const user = request.body
+        const newUser = await createUserService(user)
+        return response.status(201).json(newUser)
+    } catch (error) {
+        return response.status(400).json({
+            message: error.message
+        })
+    }
 }
 
-const listUserController = (request, response) => {
-    const users = listUserService()
-    console.log(request.userId)
-    console.log(request.userEmail)
-    return response.json(users)
+const listUserController = async (request, response) => {
+    try {
+        const users = await listUserService()
+        console.log(request.userId)
+        console.log(request.userEmail)
+        return response.json(users)
+    } catch (error) {
+        return response.status(400).json({
+            message: error.message
+        })
+    }
 }
 
 const retrieveUserController = (request, response) => {

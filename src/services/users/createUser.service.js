@@ -1,19 +1,30 @@
 import { v4 as uuidv4 } from "uuid"
-import users from "../../database"
+import database from "../../database"
 import { hash } from "bcrypt"
 
 const createUserService = async (userData) => {
+    
+    try {
+        const user = userData
+    
+        const hashedPassword = await hash(userData.password, 10)
+    
+        user.password = hashedPassword
 
-    const user = userData
-
-    const hashedPassword = await hash(userData.password, 10)
-
-    user.password = hashedPassword
-
-    user.id = uuidv4()
-    users.push(user)
-
-    return user
+        const res = await database.query(
+            `INSERT INTO
+                users(name, email, password, isadm)
+            VALUES
+                ($1, $2, $3, $4)
+            RETURNING *;`,
+            [user.name, user.email, user.password, user.isAdm]
+        )
+    
+        return res.rows[0]
+        
+    } catch (error) {
+        throw new Error(error)
+    }
 }
 
 export default createUserService
