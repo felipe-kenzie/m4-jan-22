@@ -17,8 +17,6 @@ const createUserController = async (request, response) => {
 const listUserController = async (request, response) => {
     try {
         const users = await listUserService()
-        console.log(request.userId)
-        console.log(request.userEmail)
         return response.json(users)
     } catch (error) {
         return response.status(400).json({
@@ -27,10 +25,16 @@ const listUserController = async (request, response) => {
     }
 }
 
-const retrieveUserController = (request, response) => {
-    const { id } = request.params
-    const user = retrieveUserService(id)
-    return response.json(user)
+const retrieveUserController = async (request, response) => {
+    try {
+        const { id } = request.params
+        const user = await retrieveUserService(id)
+        return response.json(user)
+    } catch (error) {
+        return response.status(400).json({
+            message: error.message
+        })
+    }
 }
 
 export { createUserController, listUserController, retrieveUserController }

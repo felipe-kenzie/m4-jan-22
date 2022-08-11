@@ -9,8 +9,8 @@ services:
     build: . # COMO ESSA SESSÃO SE REFERE A api, IREMOS FAZER O BUILD DA IMAGEM QUE DEFINIMOS NO DOCKERFILE
     ports:
       - 3000:3000 # REDIRECIONANDO A PORTA 3000 LOCAL PARA PORTA 3000 DO CONTAINER
-    environment: 
-      - PORT=3000 # CRIANDO A VARIAVEL DE AMBIENTE PORT
+    env_file:
+      - .env
     # O depends_on DEFINE QUE A api DEVE INICIAR APENAS QUANDO O db INICIAR POR COMPLETO
     depends_on:
       db:
@@ -23,7 +23,7 @@ services:
     container_name: db
     image: postgres:latest # COMO ESSA SESSÃO SE REFERE AO db, ENTÃO PEGAMOS A IMAGEM DO POSTGRES QUE VEIO DIRETO DO DOCKERHBU
     ports:
-      - 5431:5432 # REDIRECIONANDO A PORTA 5431 LOCAL PARA PORTA 5432 DO CONTAINER
+      - 5430:5432 # REDIRECIONANDO A PORTA 5431 LOCAL PARA PORTA 5432 DO CONTAINER
     # O docker VAI ENTENDER ESSAS VARIAVEIS DE AMBIENTE E CRIAR UM BANCO DE DADOS CHAMADO demo
     # TAMBÉM VAI DEFINIR O USER fabio COM A PASSWORD 1234 PARA ACESSAR NOSSO BANCO DE DADOS
     environment:
@@ -37,3 +37,10 @@ services:
       timeout: 5s
       retries: 5
       start_period: 5s
+    volumes:
+      - ./create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - db_demo:/var/lib/postgresql/data
+
+volumes:
+  db_demo:
+    driver: local

@@ -16,7 +16,7 @@ const createUserService = async (userData) => {
                 users(name, email, password, isadm)
             VALUES
                 ($1, $2, $3, $4)
-            RETURNING *;`,
+            RETURNING id, name, email, isadm;`,
             [user.name, user.email, user.password, user.isAdm]
         )
     

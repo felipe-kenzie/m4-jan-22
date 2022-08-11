@@ -3,7 +3,7 @@ import database from "../../database"
 const listUserService = async () => {
     try {
         const res = await database.query(
-            `SELECT * FROM users;`,
+            `SELECT id, name, email, isadm FROM users;`,
             []
         )
         return res.rows

@@ -22,6 +22,7 @@ const authenticationMiddleware = (request, response, next) => {
 
         request.userId = decoded.sub
         request.userEmail = decoded.email
+        request.isAdm = decoded.isAdm
 
         next()
 
