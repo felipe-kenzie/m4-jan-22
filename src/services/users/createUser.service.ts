@@ -1,17 +1,26 @@
-import users from '../../database'
-import { v4 as uuidv4 } from 'uuid'
-import { IUserRequest, IUserResponse } from '../../interfaces/users.interfaces'
+import AppDataSource from '../../data-source'
+import { User } from '../../entities/user.entity'
+import { IUserRequest } from '../../interfaces/users.interfaces'
+import { hash } from 'bcryptjs'
 
-const createUserService = (userData: IUserRequest): IUserResponse => {
+const createUserService = async ({email, isAdm, name, password}: IUserRequest): Promise<User> => {
 
-    let newUser: IUserResponse = {
-        id: uuidv4(),
-        ...userData
+    const userRepository = AppDataSource.getRepository(User)
+
+    if(!password){
+        throw new Error("Password is a required field")
     }
 
-    users.push(newUser)
+    const hashedPassword = await hash(password, 10)
 
-    const { password, ...user } = newUser
+    const user = userRepository.create({
+        name,
+        email,
+        isAdm,
+        password: hashedPassword
+    })
+
+    await userRepository.save(user)
 
     return user
 

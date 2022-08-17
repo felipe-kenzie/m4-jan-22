@@ -1,8 +1,14 @@
-import users from '../../database'
-import { IUserResponse } from '../../interfaces/users.interfaces'
+import { User } from '../../entities/user.entity'
+import AppDataSource from '../../data-source'
 
-const listUserService = (): IUserResponse[] => {
+const listUserService = async (): Promise<User[]> => {
+
+    const userRepository = AppDataSource.getRepository(User)
+
+    const users = await userRepository.find()
+
     return users
+
 }
 
 export default listUserService
