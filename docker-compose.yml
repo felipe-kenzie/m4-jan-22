@@ -12,7 +12,6 @@ services:
       - DB=kenzie
       - DB_USER=felipe
       - SECRET_KEY=7792125bbce085d0b54cd64a7065aef4
-      - NODE_ENV=docker
     depends_on:
       db:
         condition: service_healthy
