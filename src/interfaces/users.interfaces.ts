@@ -9,4 +9,9 @@ interface IUserResponse extends IUserRequest {
     id: string
 }
 
-export { IUserRequest, IUserResponse }
+interface IUserSessionRequest {
+    email: string
+    password: string
+}
+
+export { IUserRequest, IUserResponse, IUserSessionRequest }
