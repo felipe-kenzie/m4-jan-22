@@ -1,5 +1,6 @@
 import AppDataSource from '../../data-source'
 import { compare } from 'bcryptjs'
+import { AppError } from '../../errors/AppError'
 import { IUserSessionRequest } from '../../interfaces/users.interfaces'
 import { User } from '../../entities/user.entity'
 import jwt from 'jsonwebtoken'
@@ -16,13 +17,13 @@ const createSessionService = async({email, password}: IUserSessionRequest): Prom
     })
 
     if(!user){
-        throw new Error('Invalid email or password')
+        throw new AppError('Invalid email or password', 401)
     }
 
     const matchPassword = await compare(password, user.password)
 
     if(!matchPassword){
-        throw new Error('Invalid email or password')
+        throw new AppError('Invalid email or password', 401)
     }
 
     const token = jwt.sign(
