@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm'
+import { PaymentInfo } from './paymentInfo.entity'
 
 @Entity('users')
 class User {
@@ -17,6 +18,12 @@ class User {
 
     @Column()
     isAdm: boolean
+
+    @Column({ default: true })
+    isActive: boolean
+
+    @OneToOne(() => PaymentInfo, {eager: true}) @JoinColumn()
+    paymentInfo: PaymentInfo
 
 }
 

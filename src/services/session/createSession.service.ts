@@ -20,6 +20,10 @@ const createSessionService = async({email, password}: IUserSessionRequest): Prom
         throw new AppError('Invalid email or password', 401)
     }
 
+    if(!user.isActive){
+        throw new AppError('Invalid user', 401)
+    }
+
     const matchPassword = await compare(password, user.password)
 
     if(!matchPassword){
