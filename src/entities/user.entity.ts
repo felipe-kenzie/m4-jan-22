@@ -1,5 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany } from 'typeorm'
 import { PaymentInfo } from './paymentInfo.entity'
+import { Playlist } from './playlist.entity'
+import { Exclude } from 'class-transformer'
 
 @Entity('users')
 class User {
@@ -14,6 +16,7 @@ class User {
     email: string
 
     @Column({ length: 120 })
+    @Exclude()
     password: string
 
     @Column()
@@ -24,6 +27,9 @@ class User {
 
     @OneToOne(() => PaymentInfo, {eager: true}) @JoinColumn()
     paymentInfo: PaymentInfo
+
+    @OneToMany(() => Playlist, playlist => playlist.user)
+    playlist: Playlist[]
 
 }
 
