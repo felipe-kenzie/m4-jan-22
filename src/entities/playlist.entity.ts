@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, OneToMany } from 'typeorm'
+import { PlaylistSongs } from './playlistSongs.entity'
 import { User } from './user.entity'
 
 @Entity('playlists')
@@ -15,6 +16,9 @@ class Playlist {
 
     @ManyToOne(() => User, {eager: true})
     user: User
+
+    @OneToMany(() => PlaylistSongs, playlistSongs => playlistSongs.playlist)
+    playlistSongs: PlaylistSongs[]
 
 }
 
