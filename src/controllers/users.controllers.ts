@@ -1,8 +1,9 @@
 import { Request, Response } from 'express'
-import { IUserRequest } from '../interfaces/users.interfaces'
+import { IUserRequest, IUserUpdateRequest } from '../interfaces/users.interfaces'
 import createUserService from '../services/users/createUser.service'
 import listUserService from '../services/users/listUser.service'
 import { instanceToPlain } from 'class-transformer'
+import updateUserService from '../services/users/updateUser.service'
 
 const createUserController = async (req: Request, res: Response) => {
 
@@ -21,4 +22,11 @@ const listUserController = async (req: Request, res: Response) => {
 
 }
 
-export { createUserController, listUserController }
+const updateUserController = async(req: Request, res:Response) => {
+    const id = req.params.id
+    const {email, name, password}: IUserUpdateRequest = req.body
+    const updatedUser = await updateUserService(id, {email, name, password})
+    return res.json(updatedUser)
+}
+
+export { createUserController, listUserController, updateUserController }

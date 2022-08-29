@@ -14,4 +14,10 @@ interface IUserSessionRequest {
     password: string
 }
 
-export { IUserRequest, IUserResponse, IUserSessionRequest }
+interface IUserUpdateRequest {
+    email?: string
+    name?: string
+    password?: string
+}
+
+export { IUserRequest, IUserResponse, IUserSessionRequest, IUserUpdateRequest }
