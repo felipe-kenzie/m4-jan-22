@@ -20,6 +20,5 @@ app.use('/songs', songsRoutes)
 app.use('/playlist_songs', playlistSongsRoutes)
 
 app.use(handleErrorMiddleware)
-app.listen(3000, () => {
-    console.log('Server is running!')
-})
+
+export default app
