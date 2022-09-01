@@ -7,10 +7,7 @@ services:
     ports:
       - 3000:3000
     environment:
-      - DB_HOST=db
-      - DB_PASSWORD=1234
-      - DB=kenzie
-      - DB_USER=felipe
+      - DATABASE_URL=postgres://felipe:1234@db:5432/kenzie
       - SECRET_KEY=7792125bbce085d0b54cd64a7065aef4
     depends_on:
       db:
