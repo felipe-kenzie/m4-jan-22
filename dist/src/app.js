@@ -1,0 +1,25 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+require("reflect-metadata");
+const express_1 = __importDefault(require("express"));
+require("express-async-errors");
+const handleError_middleware_1 = require("./middlewares/handleError.middleware");
+const users_routes_1 = __importDefault(require("./routes/users.routes"));
+const session_routes_1 = __importDefault(require("./routes/session.routes"));
+const paymentInfo_routes_1 = __importDefault(require("./routes/paymentInfo.routes"));
+const playlists_routes_1 = __importDefault(require("./routes/playlists.routes"));
+const songs_routes_1 = __importDefault(require("./routes/songs.routes"));
+const playlistSongs_routes_1 = __importDefault(require("./routes/playlistSongs.routes"));
+const app = (0, express_1.default)();
+app.use(express_1.default.json());
+app.use('/users', users_routes_1.default);
+app.use('/login', session_routes_1.default);
+app.use('/payment_infos', paymentInfo_routes_1.default);
+app.use('/playlists', playlists_routes_1.default);
+app.use('/songs', songs_routes_1.default);
+app.use('/playlist_songs', playlistSongs_routes_1.default);
+app.use(handleError_middleware_1.handleErrorMiddleware);
+exports.default = app;
